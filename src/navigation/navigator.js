@@ -33,7 +33,7 @@ const navigator = () => {
 const Dashboard = () => {
     const tabs = menu.map(menuItem => <Tab.Screen name={menuItem.name} component={MovieList} initialParams={{ genresID: menuItem.id, genreName: menuItem.name }}/>);
     return (
-        <Tab.Navigator screenOptions={{ tabBarScrollEnabled: true }}>
+        <Tab.Navigator screenOptions={{ tabBarScrollEnabled: true, tabBarInactiveTintColor: 'white', tabBarActiveTintColor: 'white', tabBarItemStyle: { backgroundColor: 'red' } }}>
             {tabs}
         </Tab.Navigator>
     )

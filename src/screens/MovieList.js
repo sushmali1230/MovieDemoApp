@@ -4,6 +4,7 @@ import { getMovies } from '../api/api';
 import { BASE_URL, IMAGE_PATH } from '../utils/AppConstants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MovieList = ({ route }) => {
     const navigation = useNavigation();
@@ -16,6 +17,15 @@ const MovieList = ({ route }) => {
             setMovies(res.results);
         })
     }, []);
+
+    // const updateDatabase = async () => {
+    //     const storedTimeString = await AsyncStorage.getItem('LastTimeStored');
+    //     const getTimeString = new Date();
+
+    //     if (storedTime === null || storedTime === undefined || storedTime === "null" || storedTime === "undefined" || storedTime === "") {
+
+    //     } else if ()
+    // }
 
     const renderMovies = ({ item }) => {
         return (
