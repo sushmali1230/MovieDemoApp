@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, View, Text, FlatList } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { IMAGE_PATH } from '../utils/AppConstants';
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getGeners } from '../api/api';
+import { useNavigation } from '@react-navigation/native';
 
 const MovieDetails = ({ route }) => {
 
+    const navigation = useNavigation();
     const [movieTitle,setMovieTitle] = useState(route.params.title);
     const [moviePoster,setMoviePoster] = useState(route.params.poster_path);
     const [movieOverview,setMovieOverview] = useState(route.params.overview);
@@ -38,6 +40,9 @@ const MovieDetails = ({ route }) => {
     return (
         <View>
             <Image style={styles.posterImage} source={{ uri: IMAGE_PATH + moviePoster }}/>
+            <TouchableOpacity style={styles.backIconHolder} onPress={() => navigation.goBack(null)}>
+                <Image style={styles.backIcon} source={require('../assets/icons/back.png')}></Image>
+            </TouchableOpacity>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View>
                     <Text style={styles.titleText}>{movieTitle}</Text>
@@ -183,6 +188,20 @@ const styles = StyleSheet.create({
     genreFlatList: {
         marginLeft: 10,
         marginVertical: 10
+    },
+    backIconHolder: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        padding: 10,
+        borderRadius: 50,
+        backgroundColor: "#E0E0E0",
+        justifyContent: 'center'
+    },
+    backIcon: {
+        height: 20,
+        width: 20,
+        resizeMode: 'stretch'
     }
 });
 
