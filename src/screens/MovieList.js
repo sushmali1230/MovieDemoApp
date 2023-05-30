@@ -5,6 +5,7 @@ import { BASE_URL, IMAGE_PATH } from '../utils/AppConstants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DataAdd, createTable } from '../sqlite/sqlitefunctions';
 
 const MovieList = ({ route }) => {
     const navigation = useNavigation();
@@ -13,10 +14,35 @@ const MovieList = ({ route }) => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
+        createTable(genreName)
         getMovies(genreID).then(res => {
-            setMovies(res.results);
-        })
+            for (let i = 0; i< res.results ; i++) {
+                DataAdd(genreName, res.results[i].title, res.results[i].overview, res.results[i].genre_ids, res.results[i].backdrop_path, res.results[i].poster_path, res.results[i].vote_average, res.results[i].vote_count);
+            }
+        });
+        getData();
     }, []);
+
+    function getData () {
+        try {
+            db.transaction(async (tx) => {
+                
+                tx.executeSql(
+                    "SELECT title, overview, genre_ids, backdrop_path, poster_path, vote_average, vote_count FROM "+genreName+"_MOVIES",[],
+                    (tx, results) => {
+                        var tempResult = [];
+                        var i = 0;
+                        for (i = 0; i < results.rows.length; i++) {
+                            tempResult.push(results.rows.item(i))
+                        }
+                        setMovies(tempResult);
+                    }
+                )
+            })
+        } catch (error) {
+            console.log(error);
+        }    
+    }
 
     // const updateDatabase = async () => {
     //     const storedTimeString = await AsyncStorage.getItem('LastTimeStored');

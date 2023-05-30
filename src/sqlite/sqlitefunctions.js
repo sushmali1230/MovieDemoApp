@@ -1,6 +1,6 @@
 import sqlite from 'react-native-sqlite-storage';
 
-export const db = sqlite.openDatabase(
+const db = sqlite.openDatabase(
     {
         name: 'MovieDB',
         location: 'default'

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { PermissionsAndroid, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { getGeners } from '../api/api';
+import { createTable } from '../sqlite/sqlitefunctions';
 
 const Splash = () => {
 
