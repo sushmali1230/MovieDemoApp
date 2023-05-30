@@ -10,14 +10,19 @@ const db = sqlite.openDatabase(
 );
 
 export const createTable = (Genre) => {
-    db.transaction((tx) => {
-        tx.executeSql(
-            "CREATE TABLE IF NOT EXISTS "
-            +Genre
-            +"_MOVIES "
-            +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, overview TEXT, genre_ids TEXT, backdrop_path TEXT, poster_path TEXT, vote_average TEXT, vote_count TEXT)"
-        )
-    })
+    try {
+        db.transaction((tx) => {
+            tx.executeSql(
+                "CREATE TABLE IF NOT EXISTS "
+                +Genre
+                +"_MOVIES "
+                +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, overview TEXT, genre_ids TEXT, backdrop_path TEXT, poster_path TEXT, vote_average TEXT, vote_count TEXT)"
+            )
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 
 export const DataAdd = async (Genre, title, overview, genre_ids, backdrop_path, poster_path, vote_average, vote_count) => {
