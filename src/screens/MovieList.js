@@ -30,9 +30,9 @@ const MovieList = ({ route }) => {
     }, []);
 
     const getTimeDifference = async () => {
-        const savedTimeString = await AsyncStorage.getItem('SavedTime');
+        const savedTimeString = await AsyncStorage.getItem('SavedTime'+genreName);
         if (savedTimeString === null || savedTimeString === undefined || savedTimeString === "null" || savedTimeString === "undefined" || savedTimeString === "") {
-            await AsyncStorage.setItem('SavedTime', JSON.stringify(new Date()))
+            await AsyncStorage.setItem('SavedTime'+genreName, JSON.stringify(new Date()))
             getMovies(genreID).then(res => {
                 saveData(res.results)
             });
